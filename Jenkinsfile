@@ -20,23 +20,21 @@ pipeline{
         stage("Build"){
             steps{
                 script{
-                dockerbuild("notes-app","latest", "myserverd")    
+                docker_build("notes-app", "latest", "myserverd")  
                 }
             }
         }
         stage("Push to DockerHub"){
             steps{
                 script{
-                dockerpush("dockerHubCreds","notes-app","latest")    
+                docker_push("notes-app","latest", "myserverd")    
                 }
             }
         }
         stage("Deploy"){
             steps{
-                script{
                 echo "This is deploying the code"
                 sh "docker-compose down && docker-compose up -d"
-                }
             }
         }        
     }
